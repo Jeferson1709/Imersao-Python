@@ -136,3 +136,27 @@ df_temperatura  = pd.DataFrame({
 
 df_temperatura["preenchido_fill"]= df_temperatura["Temperatura"].ffill()
 df_temperatura
+
+df_temperatura  = pd.DataFrame({
+    "Dia" : ["Segunda", "Terça", "Quarta" , "Quinta", "Sexta"],
+    "Temperatura" : [30 , np.nan , np.nan , 20 , 27]
+})
+
+df_temperatura["preenchido_fill"]= df_temperatura["Temperatura"].bfill()
+df_temperatura
+
+df_cidades = pd.DataFrame({
+    'nome' : ["Ana" , "Bruno" , "Carlos", "Daniele", "Val"],
+    "cidade" : ["São Paulo", np.nan, "Curitiba" , np.nan, "Belém"]
+    
+})
+
+df_cidades ["cidade_preenchida"] = df_cidades["cidade"].fillna("Não encontrado")
+df_cidades
+
+df_limpo= df.dropna()
+df_limpo.isnull().sum()
+
+df_limpo.info()
+
+df_limpo.assign(ano = df_limpo["ano"].astype('int64'))
