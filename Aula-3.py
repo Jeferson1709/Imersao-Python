@@ -1,7 +1,9 @@
 # Puxando a biblioteca Pandas.
 import pandas as pd
 import plotly.express as px
-
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 df = pd.read_csv("https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv")
 
 # Lendo a base de dados.
@@ -29,13 +31,14 @@ colunas_traduzidas = {
     'work_year': 'ano',
     'experience_level': 'senioridade',
     'employment_type': 'contrato',
-    'cargo': 'cargo',
-    'salario': 'salario',
+    'job_title': 'cargo',
+    'salary': 'salario',
     'moeda_salario': 'moeda',
-    'salario_em_usd': 'usd',
-    'residencia_funcionario': 'residencia',
+    'salary_currency': 'usd',
+    'salary_in_usd': 'residencia',
     'remote_ratio': 'remoto',
-    'localizacao_empresa': 'empresa',
+    'company_location': 'empresa',
+    'employee_residence' : 'residencia_funcionario',
     'company_size': 'tamanho_empresa'
 }
 
@@ -113,7 +116,6 @@ df['ano'].unique()
 df[df.isnull().any(axis=1)]
 
 # Manipulação de valores.
-import numpy as np
 
 # Criando um Dataframe de para usar de exemplo.
 df_salarios = pd.DataFrame({
@@ -161,100 +163,99 @@ df_limpo.isnull().sum()
 df_limpo.info()
 
 df_limpo.assign(ano=df_limpo["ano"].astype('int64'))
-import pandas as pd
 
-df = pd.read_csv("https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv")
+
 
 df_limpo= df.dropna()
 df_limpo.isnull().sum()
 
 df_limpo.info()
-
-df_limpo.assign(ano = df_limpo['work_year'].astype('int64'))
+print(df_limpo.columns)
+df_limpo.assign(ano = df_limpo['ano'].astype('int64'))
 df_limpo.head()
 
-df_limpo['experience_level'].value_counts().plot(kind='bar', title='Distribuição de senioridade')
+df_limpo['senioridade'].value_counts().plot(kind='bar', title='Distribuição de senioridade')
 
-import seaborn as sns
-sns.barplot(data= df_limpo , x='experience_level' , y='salary_currency')
 
-import matplotlib.pyplot as plt
+sns.barplot(data= df_limpo , x='senioridade' , y='salario')
+
+
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='experience_level' , y='salary')
+sns.barplot(data= df_limpo , x='senioridade' , y='salario')
 plt.title(' Salário Médio por senioridade')
 plt.xlabel('Senioridade')
 plt.ylabel('Salário médio anual (USD)')
 plt.show()
 
-df_limpo.groupby('experience_level')['salary'].mean().sort_values(ascending=False)
+df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False)
 
 
-ordem = df_limpo.groupby('experience_level')['salary'].mean().sort_values(ascending=False).index
+ordem = df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False).index
 
 ordem
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='experience_level' , y='salary', order=ordem)
+sns.barplot(data= df_limpo , x='senioridade' , y='salario', order=ordem)
 plt.title(' Salário Médio por senioridade')
 plt.xlabel('Senioridade')
 plt.ylabel('Salário médio anual (USD)')
 plt.show()
 
-df_limpo.groupby('experience_level')['salary'].mean().sort_values(ascending=False)
+df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False)
 
-ordem = df_limpo.groupby('experience_level')['salary'].mean().sort_values(ascending=False).index
+ordem = df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False).index
 
 ordem
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='experience_level' , y='salary', order=ordem)
+sns.barplot(data= df_limpo , x='senioridade' , y='salario', order=ordem)
 plt.title(' Salário Médio por senioridade')
 plt.xlabel('Senioridade')
 plt.ylabel('Salário médio anual (USD)')
 plt.show()
 
 plt.figure(figsize=(10, 5))
-sns.histplot(df_limpo['salary'], bins= 5, kde=False )
+sns.histplot(df_limpo['salario'], bins= 5, kde=False )
 plt.title('Distribuição de Salários')
 plt.xlabel('Salário')
 plt.ylabel('Frequência')
 plt.show()
 
 plt.figure(figsize=(8, 5))
-sns.boxplot(x= df_limpo['salary'])
+sns.boxplot(x= df_limpo['salario'])
 plt.title('Distribuição de Salários por senioridade')
 plt.xlabel('Senioridade')
 plt.show()
 
-ordem_senioridade = ['EX', 'SE', 'MI', 'EN']
+ordem_senioridade = ['Excutivo', 'Senior', 'Pleno', 'Junior']
 plt.figure(figsize=(8, 5))
-sns.boxplot(x='experience_level', y='salary' , data = df_limpo , order=ordem_senioridade)
+sns.boxplot(x='senioridade', y='salario' , data = df_limpo , order=ordem_senioridade)
 plt.title('Distribuição de Salários por senioridade')
 plt.xlabel('Senioridade')
 
-ordem_senioridade = ['EX', 'SE', 'MI', 'EN']
+ordem_senioridade = ['Excutivo', 'Senior', 'Pleno', 'Junior']
 plt.figure(figsize=(8, 5))
-sns.boxplot(x='experience_level', y='salary' , data = df_limpo , order=ordem_senioridade, palette='Set2', hue= 'experience_level')
+sns.boxplot(x='senioridade', y='salario' , data = df_limpo , order=ordem_senioridade, palette='Set2', hue= 'senioridade')
 plt.title('Distribuição de Salários por senioridade')
 plt.xlabel('Senioridade')
 
-df_salario_senioridade = df_limpo.groupby('experience_level')['salary'].mean().reset_index()
+df_salario_senioridade = df_limpo.groupby('senioridade')['salario'].mean().reset_index()
 
-# Ordering by 'senioridade' based on the mean salary
-ordem_salario_senioridade = df_salario_senioridade.sort_values(by='salary', ascending=False)['experience_level'].tolist()
+# Ordering by 'senioridade' based on the mean salario
+ordem_salario_senioridade = df_salario_senioridade.sort_values(by='salario', ascending=False)['senioridade'].tolist()
 
 
 fig = px.bar(df_salario_senioridade,
-             x='experience_level',
-             y='salary',
+             x='senioridade',
+             y='salario',
              title='Salário Médio por Senioridade (Plotly)',
-             labels={'experience_level': 'Senioridade', 'salary': 'Salário Médio Anual (USD)'},
-             category_orders={'experience_level': ordem_salario_senioridade})
+             labels={'senioridade': 'Senioridade', 'salario': 'Salário Médio Anual (USD)'},
+             category_orders={'senioridade': ordem_salario_senioridade})
 
 fig.show()
 
-remoto_contagem =df_limpo['remote_ratio'].value_counts().reset_index()
+remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
 remoto_contagem.columns = ['remoto', 'contagem']
 fig = px.pie(remoto_contagem,
              names='remoto',
@@ -263,7 +264,7 @@ fig = px.pie(remoto_contagem,
 )
 fig.show()
 
-remoto_contagem =df_limpo['remote_ratio'].value_counts().reset_index()
+remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
 remoto_contagem.columns = ['remoto', 'contagem']
 fig = px.pie(remoto_contagem,
              names='remoto',
@@ -273,7 +274,7 @@ fig = px.pie(remoto_contagem,
 )
 fig.show()
 
-remoto_contagem =df_limpo['remote_ratio'].value_counts().reset_index()
+remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
 remoto_contagem.columns = ['remoto', 'contagem']
 fig = px.pie(remoto_contagem,
              names='remoto',
