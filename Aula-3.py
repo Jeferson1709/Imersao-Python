@@ -4,7 +4,10 @@ import plotly.express as px
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-df = pd.read_csv("https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv")
+
+df = pd.read_csv(
+    "https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv"
+)
 
 # Lendo a base de dados.
 df.head()
@@ -28,18 +31,18 @@ print("Colunas: ", colunas)
 df.columns
 # prompt: traduza para mim as colunas do dataframe df para português brasileiro.
 colunas_traduzidas = {
-    'work_year': 'ano',
-    'experience_level': 'senioridade',
-    'employment_type': 'contrato',
-    'job_title': 'cargo',
-    'salary': 'salario',
-    'moeda_salario': 'moeda',
-    'salary_currency': 'usd',
-    'salary_in_usd': 'residencia',
-    'remote_ratio': 'remoto',
-    'company_location': 'empresa',
-    'employee_residence' : 'residencia_funcionario',
-    'company_size': 'tamanho_empresa'
+    "work_year": "ano",
+    "experience_level": "senioridade",
+    "employment_type": "contrato",
+    "job_title": "cargo",
+    "salary": "salario",
+    "moeda_salario": "moeda",
+    "salary_currency": "usd",
+    "salary_in_usd": "residencia",
+    "remote_ratio": "remoto",
+    "company_location": "empresa",
+    "employee_residence": "residencia_funcionario",
+    "company_size": "tamanho_empresa",
 }
 
 df = df.rename(columns=colunas_traduzidas)
@@ -47,62 +50,52 @@ print("Novas colunas do DataFrame:")
 print(df.columns)
 
 # Contando a frequência de cada nívelx de experiência:
-df['senioridade'].value_counts()
+df["senioridade"].value_counts()
 
 # Contando a frequência de cada tipo de emprego:
-df['contrato'].value_counts()
+df["contrato"].value_counts()
 
 # Contando a frequência de cada tipo de trabalho:
-df['remoto'].value_counts()
+df["remoto"].value_counts()
 
 # Contando a frequência de tamanho da empresa:
-df['tamanho_empresa'].value_counts()
+df["tamanho_empresa"].value_counts()
 
 # prompt: traduza para português as categorias da coluna "senioridade" do dataframe df
-df['senioridade'] = df['senioridade'].replace({
-    'SE': 'Senior',
-    'MI': 'Pleno',
-    'EN': 'Junior',
-    'EX': 'Executivo'
-})
+df["senioridade"] = df["senioridade"].replace(
+    {"SE": "Senior", "MI": "Pleno", "EN": "Junior", "EX": "Executivo"}
+)
 
 print("Novas categorias da coluna 'senioridade':")
-df['senioridade'].value_counts()
+df["senioridade"].value_counts()
 
 # prompt: traduza para português as categorias da coluna "contrato" do dataframe df
-df['contrato'] = df['contrato'].replace({
-    'FT': 'Tempo Integral',
-    'CT': 'Contrato',
-    'PT': 'Meio Período',
-    'FL': 'Freelancer'
-})
+df["contrato"] = df["contrato"].replace(
+    {"FT": "Tempo Integral", "CT": "Contrato", "PT": "Meio Período", "FL": "Freelancer"}
+)
 
 print("Novas categorias da coluna 'contrato':")
-df['contrato'].value_counts()
+df["contrato"].value_counts()
 
 # prompt: traduza para português as categorias da coluna "tamanho_empresa" do dataframe df
-df['tamanho_empresa'] = df['tamanho_empresa'].replace({
-    'M': 'Médio',
-    'L': 'Grande',
-    'S': 'Pequeno'
-})
+df["tamanho_empresa"] = df["tamanho_empresa"].replace(
+    {"M": "Médio", "L": "Grande", "S": "Pequeno"}
+)
 
 print("Novas categorias da coluna 'tamanho_empresa':")
-df['tamanho_empresa'].value_counts()
+df["tamanho_empresa"].value_counts()
 
 # prompt: traduza para português as categorias da coluna "remoto" do dataframe df
-df['remoto'] = df['remoto'].replace({
-    0: 'Presencial',
-    50: 'Híbrido',
-    100: 'Remoto Total'
-})
+df["remoto"] = df["remoto"].replace(
+    {0: "Presencial", 50: "Híbrido", 100: "Remoto Total"}
+)
 
 print("Novas categorias da coluna 'remoto':")
-df['remoto'].value_counts()
+df["remoto"].value_counts()
 
 df.head()
 
-df.describe(include=['object', 'string'])
+df.describe(include=["object", "string"])
 
 df.describe()
 
@@ -110,7 +103,7 @@ df.describe()
 # df.isnull.sum()
 
 # Valores únicos nesse campo.
-df['ano'].unique()
+df["ano"].unique()
 
 # Ver todos todo os nulos da base.
 df[df.isnull().any(axis=1)]
@@ -118,41 +111,52 @@ df[df.isnull().any(axis=1)]
 # Manipulação de valores.
 
 # Criando um Dataframe de para usar de exemplo.
-df_salarios = pd.DataFrame({
-    'nome ': ["Ana", "Bruno", "Carlos", "Daniele", "Val"],
-    'salario': [4000, np.nan, 5000, np.nan, 100000]
-})
+df_salarios = pd.DataFrame(
+    {
+        "nome ": ["Ana", "Bruno", "Carlos", "Daniele", "Val"],
+        "salario": [4000, np.nan, 5000, np.nan, 100000],
+    }
+)
 
 # Calcula a média salarial e substitui os nulos pela média e arrendonda os valores
-df_salarios['salario_media'] = df_salarios['salario'].fillna(df_salarios['salario'].mean().round(2))
+df_salarios["salario_media"] = df_salarios["salario"].fillna(
+    df_salarios["salario"].mean().round(2)
+)
 
-'''Calcula mediana e substitui os nulos pela mediana '''
+"""Calcula mediana e substitui os nulos pela mediana """
 
-df_salarios['salario_mediana'] = df_salarios['salario'].fillna(df_salarios['salario'].median().round(2))
+df_salarios["salario_mediana"] = df_salarios["salario"].fillna(
+    df_salarios["salario"].median().round(2)
+)
 
 df_salarios
 
-df_temperatura = pd.DataFrame({
-    "Dia": ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
-    "Temperatura": [30, np.nan, np.nan, 20, 27]
-})
+df_temperatura = pd.DataFrame(
+    {
+        "Dia": ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+        "Temperatura": [30, np.nan, np.nan, 20, 27],
+    }
+)
 
 df_temperatura["preenchido_fill"] = df_temperatura["Temperatura"].ffill()
 df_temperatura
 
-df_temperatura = pd.DataFrame({
-    "Dia": ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
-    "Temperatura": [30, np.nan, np.nan, 20, 27]
-})
+df_temperatura = pd.DataFrame(
+    {
+        "Dia": ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+        "Temperatura": [30, np.nan, np.nan, 20, 27],
+    }
+)
 
 df_temperatura["preenchido_fill"] = df_temperatura["Temperatura"].bfill()
 df_temperatura
 
-df_cidades = pd.DataFrame({
-    'nome': ["Ana", "Bruno", "Carlos", "Daniele", "Val"],
-    "cidade": ["São Paulo", np.nan, "Curitiba", np.nan, "Belém"]
-
-})
+df_cidades = pd.DataFrame(
+    {
+        "nome": ["Ana", "Bruno", "Carlos", "Daniele", "Val"],
+        "cidade": ["São Paulo", np.nan, "Curitiba", np.nan, "Belém"],
+    }
+)
 
 df_cidades["cidade_preenchida"] = df_cidades["cidade"].fillna("Não encontrado")
 df_cidades
@@ -162,125 +166,142 @@ df_limpo.isnull().sum()
 
 df_limpo.info()
 
-df_limpo.assign(ano=df_limpo["ano"].astype('int64'))
+df_limpo.assign(ano=df_limpo["ano"].astype("int64"))
 
 
-
-df_limpo= df.dropna()
+df_limpo = df.dropna()
 df_limpo.isnull().sum()
 
 df_limpo.info()
-print(df_limpo.columns)
-df_limpo.assign(ano = df_limpo['ano'].astype('int64'))
+df_limpo.assign(ano=df_limpo["ano"].astype("int64"))
 df_limpo.head()
 
-df_limpo['senioridade'].value_counts().plot(kind='bar', title='Distribuição de senioridade')
+df_limpo["senioridade"].value_counts().plot(
+    kind="bar", title="Distribuição de senioridade"
+)
 
 
-sns.barplot(data= df_limpo , x='senioridade' , y='salario')
-
+sns.barplot(data=df_limpo, x="senioridade", y="salario")
 
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='senioridade' , y='salario')
-plt.title(' Salário Médio por senioridade')
-plt.xlabel('Senioridade')
-plt.ylabel('Salário médio anual (USD)')
+sns.barplot(data=df_limpo, x="senioridade", y="salario")
+plt.title(" Salário Médio por senioridade")
+plt.xlabel("Senioridade")
+plt.ylabel("Salário médio anual (USD)")
 plt.show()
 
-df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False)
+df_limpo.groupby("senioridade")["salario"].mean().sort_values(ascending=False)
 
 
-ordem = df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False).index
+ordem = (
+    df_limpo.groupby("senioridade")["salario"].mean().sort_values(ascending=False).index
+)
 
 ordem
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='senioridade' , y='salario', order=ordem)
-plt.title(' Salário Médio por senioridade')
-plt.xlabel('Senioridade')
-plt.ylabel('Salário médio anual (USD)')
+sns.barplot(data=df_limpo, x="senioridade", y="salario", order=ordem)
+plt.title(" Salário Médio por senioridade")
+plt.xlabel("Senioridade")
+plt.ylabel("Salário médio anual (USD)")
 plt.show()
 
-df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False)
+df_limpo.groupby("senioridade")["salario"].mean().sort_values(ascending=False)
 
-ordem = df_limpo.groupby('senioridade')['salario'].mean().sort_values(ascending=False).index
+ordem = (
+    df_limpo.groupby("senioridade")["salario"].mean().sort_values(ascending=False).index
+)
 
 ordem
 
 plt.figure(figsize=(8, 5))
-sns.barplot(data= df_limpo , x='senioridade' , y='salario', order=ordem)
-plt.title(' Salário Médio por senioridade')
-plt.xlabel('Senioridade')
-plt.ylabel('Salário médio anual (USD)')
+sns.barplot(data=df_limpo, x="senioridade", y="salario", order=ordem)
+plt.title(" Salário Médio por senioridade")
+plt.xlabel("Senioridade")
+plt.ylabel("Salário médio anual (USD)")
 plt.show()
 
 plt.figure(figsize=(10, 5))
-sns.histplot(df_limpo['salario'], bins= 5, kde=False )
-plt.title('Distribuição de Salários')
-plt.xlabel('Salário')
-plt.ylabel('Frequência')
+sns.histplot(df_limpo["salario"], bins=5, kde=False)
+plt.title("Distribuição de Salários")
+plt.xlabel("Salário")
+plt.ylabel("Frequência")
 plt.show()
 
 plt.figure(figsize=(8, 5))
-sns.boxplot(x= df_limpo['salario'])
-plt.title('Distribuição de Salários por senioridade')
-plt.xlabel('Senioridade')
+sns.boxplot(x=df_limpo["salario"])
+plt.title("Distribuição de Salários por senioridade")
+plt.xlabel("Senioridade")
 plt.show()
 
-ordem_senioridade = ['Excutivo', 'Senior', 'Pleno', 'Junior']
+ordem_senioridade = ["Excutivo", "Senior", "Pleno", "Junior"]
 plt.figure(figsize=(8, 5))
-sns.boxplot(x='senioridade', y='salario' , data = df_limpo , order=ordem_senioridade)
-plt.title('Distribuição de Salários por senioridade')
-plt.xlabel('Senioridade')
+sns.boxplot(x="senioridade", y="salario", data=df_limpo, order=ordem_senioridade)
+plt.title("Distribuição de Salários por senioridade")
+plt.xlabel("Senioridade")
 
-ordem_senioridade = ['Excutivo', 'Senior', 'Pleno', 'Junior']
+ordem_senioridade = ["Excutivo", "Senior", "Pleno", "Junior"]
 plt.figure(figsize=(8, 5))
-sns.boxplot(x='senioridade', y='salario' , data = df_limpo , order=ordem_senioridade, palette='Set2', hue= 'senioridade')
-plt.title('Distribuição de Salários por senioridade')
-plt.xlabel('Senioridade')
+sns.boxplot(
+    x="senioridade",
+    y="salario",
+    data=df_limpo,
+    order=ordem_senioridade,
+    palette="Set2",
+    hue="senioridade",
+)
+plt.title("Distribuição de Salários por senioridade")
+plt.xlabel("Senioridade")
 
-df_salario_senioridade = df_limpo.groupby('senioridade')['salario'].mean().reset_index()
+df_salario_senioridade = df_limpo.groupby("senioridade")["salario"].mean().reset_index()
 
 # Ordering by 'senioridade' based on the mean salario
-ordem_salario_senioridade = df_salario_senioridade.sort_values(by='salario', ascending=False)['senioridade'].tolist()
+ordem_salario_senioridade = df_salario_senioridade.sort_values(
+    by="salario", ascending=False
+)["senioridade"].tolist()
 
 
-fig = px.bar(df_salario_senioridade,
-             x='senioridade',
-             y='salario',
-             title='Salário Médio por Senioridade (Plotly)',
-             labels={'senioridade': 'Senioridade', 'salario': 'Salário Médio Anual (USD)'},
-             category_orders={'senioridade': ordem_salario_senioridade})
+fig = px.bar(
+    df_salario_senioridade,
+    x="senioridade",
+    y="salario",
+    title="Salário Médio por Senioridade (Plotly)",
+    labels={"senioridade": "Senioridade", "salario": "Salário Médio Anual (USD)"},
+    category_orders={"senioridade": ordem_salario_senioridade},
+)
 
 fig.show()
 
-remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
-remoto_contagem.columns = ['remoto', 'contagem']
-fig = px.pie(remoto_contagem,
-             names='remoto',
-             values='contagem',
-             title='Porporção dos tipos de trabalho'
+remoto_contagem = df_limpo["remoto"].value_counts().reset_index()
+remoto_contagem.columns = ["remoto", "contagem"]
+fig = px.pie(
+    remoto_contagem,
+    names="remoto",
+    values="contagem",
+    title="Porporção dos tipos de trabalho",
 )
 fig.show()
 
-remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
-remoto_contagem.columns = ['remoto', 'contagem']
-fig = px.pie(remoto_contagem,
-             names='remoto',
-             values='contagem',
-             title='Porporção dos tipos de trabalho',
-             hole = 0.5
+remoto_contagem = df_limpo["remoto"].value_counts().reset_index()
+remoto_contagem.columns = ["remoto", "contagem"]
+fig = px.pie(
+    remoto_contagem,
+    names="remoto",
+    values="contagem",
+    title="Porporção dos tipos de trabalho",
+    hole=0.5,
 )
 fig.show()
 
-remoto_contagem =df_limpo['remoto'].value_counts().reset_index()
-remoto_contagem.columns = ['remoto', 'contagem']
-fig = px.pie(remoto_contagem,
-             names='remoto',
-             values='contagem',
-             title='Porporção dos tipos de trabalho',
-             hole = 0.5
+remoto_contagem = df_limpo["remoto"].value_counts().reset_index()
+remoto_contagem.columns = ["remoto", "contagem"]
+fig = px.pie(
+    remoto_contagem,
+    names="remoto",
+    values="contagem",
+    title="Porporção dos tipos de trabalho",
+    hole=0.5,
 )
-fig.update_traces(textposition='inside', textinfo='percent+label')
+fig.update_traces(textposition="inside", textinfo="percent+label")
 fig.show()
