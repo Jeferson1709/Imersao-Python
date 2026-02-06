@@ -1,5 +1,5 @@
 #Puxando a biblioteca Pandas.
-import padas as pd
+import pandas as pd
 
 df = pd.read_csv("https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv")
 
@@ -25,17 +25,17 @@ print("Colunas: ", colunas)
 df.columns
 #prompt: traduza para mim as colunas do dataframe df para português brasileiro. 
 colunas_traduzidas = {
-    'ano': 'ano',
-    'nivel_experiencia': 'senioridade',
-    'tipo_emprego': 'contrato',
+    'work_year': 'ano',
+    'experience_level': 'senioridade',
+    'employment_type': 'contrato',
     'cargo': 'cargo',
     'salario': 'salario',
     'moeda_salario': 'moeda',
     'salario_em_usd': 'usd',
     'residencia_funcionario': 'residencia',
-    'taxa_remoto': 'remoto',
+    'remote_ratio': 'remoto',
     'localizacao_empresa': 'empresa',
-    'porte_empresa': 'tamanho_empresa'
+    'company_size': 'tamanho_empresa'
 }
 
 df = df.rename(columns=colunas_traduzidas)
@@ -43,10 +43,10 @@ print("Novas colunas do DataFrame:")
 print(df.columns)
 
 #Contando a frequência de cada nívelx de experiência:
-df['nivel_experiencia'].value_counts()
+df['senioridade'].value_counts()
 
 #Contando a frequência de cada tipo de emprego:
-df['tipo_emprego'].value_counts()
+df['contrato'].value_counts()
 
 
 #Contando a frequência de cada tipo de trabalho:
@@ -99,12 +99,12 @@ df['remoto'].value_counts()
 
 df.head()
 
-df.describe(include='object')
+df.describe(include=['object' , 'string'])
 
 df.describe()
 
 # Soma dos valaores nulos.
-df.isnull.sum()
+#df.isnull.sum()
 
 #Valores únicos nesse campo.
 df['ano'].unique()
